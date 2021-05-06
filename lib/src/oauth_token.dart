@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:clock/clock.dart';
+
 /// An authentication token.
 class OAuthToken {
   /// Constructs an [OAuthToken]
@@ -10,12 +12,15 @@ class OAuthToken {
   });
 
   /// Constructs an [OAuthToken] from a [map]
-  factory OAuthToken.fromMap(Map<String, dynamic> map) {
+  factory OAuthToken.fromMap(
+    Map<String, dynamic> map, [
+    Clock clock = const Clock(),
+  ]) {
     final expiresIn = map['expiresIn'];
     return OAuthToken(
       token: map['accessToken'],
       expiresAt: expiresIn != null
-          ? DateTime.now().add(Duration(seconds: expiresIn))
+          ? clock.now().add(Duration(seconds: expiresIn))
           : null,
       refreshToken: map['refreshToken'],
     );

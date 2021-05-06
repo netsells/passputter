@@ -1,8 +1,8 @@
 import 'package:passputter/passputter.dart';
 import 'package:passputter/src/oauth_api_interface.dart';
 
-/// Implementation of [PassputterInterface]
-class PassputterImpl implements PassputterInterface {
+/// Implementation of [Passputter]
+class PassputterImpl implements Passputter {
   /// Constructs a [PassputterImpl]
   const PassputterImpl({
     required this.oAuthApi,

@@ -1,7 +1,6 @@
-import 'package:passputter/src/http_error_exception.dart';
+import 'package:dio/dio.dart';
 import 'package:passputter/src/oauth_api_interface.dart';
 import 'package:passputter/src/oauth_token.dart';
-import 'package:http/http.dart';
 
 /// Implementation of [OAuthApiInterface]
 class OAuthApiImpl implements OAuthApiInterface {
@@ -13,8 +12,8 @@ class OAuthApiImpl implements OAuthApiInterface {
   /// Typically ends in `oauth/token`.
   final String endpoint;
 
-  /// The HTTP [Client] to use for requests.
-  final Client client;
+  /// The [Dio] instance to use for requests.
+  final Dio client;
 
   @override
   Future<OAuthToken> getClientToken({
@@ -22,19 +21,16 @@ class OAuthApiImpl implements OAuthApiInterface {
     required String clientSecret,
   }) async {
     final r = await client.post(
-      Uri.parse(endpoint),
-      body: <String, String>{
+      endpoint,
+      data: <String, String>{
         'client_id': clientId,
         'client_secret': clientSecret,
         'grant_type': 'client_credentials',
       },
+      options: Options(contentType: Headers.formUrlEncodedContentType),
     );
 
-    if (r.statusCode >= 400 && r.statusCode <= 599) {
-      throw HttpErrorException(response: r);
-    }
-
-    return OAuthToken.fromJson(r.body);
+    return OAuthToken.fromJson(r.data);
   }
 
   @override
@@ -44,20 +40,17 @@ class OAuthApiImpl implements OAuthApiInterface {
     required String clientSecret,
   }) async {
     final r = await client.post(
-      Uri.parse(endpoint),
-      body: <String, String>{
+      endpoint,
+      data: <String, String>{
         'refresh_token': refreshToken,
         'client_id': clientId,
         'client_secret': clientSecret,
         'grant_type': 'refresh_token',
       },
+      options: Options(contentType: Headers.formUrlEncodedContentType),
     );
 
-    if (r.statusCode >= 400 && r.statusCode <= 599) {
-      throw HttpErrorException(response: r);
-    }
-
-    return OAuthToken.fromJson(r.body);
+    return OAuthToken.fromJson(r.data);
   }
 
   @override
@@ -68,20 +61,17 @@ class OAuthApiImpl implements OAuthApiInterface {
     required String clientSecret,
   }) async {
     final r = await client.post(
-      Uri.parse(endpoint),
-      body: <String, String>{
+      endpoint,
+      data: <String, String>{
         'username': username,
         'password': password,
         'client_id': clientId,
         'client_secret': clientSecret,
         'grant_type': 'password',
       },
+      options: Options(contentType: Headers.formUrlEncodedContentType),
     );
 
-    if (r.statusCode >= 400 && r.statusCode <= 599) {
-      throw HttpErrorException(response: r);
-    }
-
-    return OAuthToken.fromJson(r.body);
+    return OAuthToken.fromJson(r.data);
   }
 }
