@@ -88,6 +88,8 @@ class HiveTokenStorage implements TokenStorage {
 }
 ```
 
+_Note: The `fromJson` and `toJson` methods in this example aren't actually included in the Passputter package. You could implement them yourself as extension methods._
+
 ### ✨ Step 2: Create a Passputter object
 
 The `Passputter` class is the class you will use to log the user in and out, as well as to determine the current auth state.
