@@ -24,4 +24,4 @@ jobs:
         run: dart pub run import_sorter:main --exit-if-changed
 
       - name: Run tests
-        run: dart test
+        run: dart test --test-randomize-ordering-seed random
