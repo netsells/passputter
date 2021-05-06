@@ -42,6 +42,8 @@ abstract class Passputter {
   bool get isLoggedIn;
 
   /// Log in with the given [email] and [password] credentials.
+  ///
+  /// Throws a [DioError] if the token request returns an error.
   Future<void> logIn({
     required String email,
     required String password,
