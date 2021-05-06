@@ -1,8 +1,11 @@
+// 📦 Package imports:
 import 'package:dio/dio.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:test/test.dart';
+
+// 🌎 Project imports:
 import 'package:passputter/src/oauth_api_impl.dart';
 import 'package:passputter/src/oauth_token.dart';
-import 'package:test/test.dart';
 
 class MockDio extends Mock implements Dio {}
 

@@ -1,7 +1,10 @@
+// 📦 Package imports:
 import 'package:clock/clock.dart';
-import 'package:passputter/src/oauth_token.dart';
 import 'package:test/test.dart';
 import 'package:time/time.dart';
+
+// 🌎 Project imports:
+import 'package:passputter/src/oauth_token.dart';
 
 void main() {
   group('fromMap', () {
