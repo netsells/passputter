@@ -1,6 +1,9 @@
+// 📦 Package imports:
+import 'package:test/test.dart';
+
+// 🌎 Project imports:
 import 'package:passputter/src/in_memory_token_storage.dart';
 import 'package:passputter/src/oauth_token.dart';
-import 'package:test/test.dart';
 
 void main() {
   late InMemoryTokenStorage storage;

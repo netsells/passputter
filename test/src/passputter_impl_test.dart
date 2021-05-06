@@ -1,9 +1,12 @@
+// 📦 Package imports:
 import 'package:mocktail/mocktail.dart';
+import 'package:test/test.dart';
+
+// 🌎 Project imports:
 import 'package:passputter/passputter.dart';
 import 'package:passputter/src/oauth_api_interface.dart';
 import 'package:passputter/src/oauth_token.dart';
 import 'package:passputter/src/passputter_impl.dart';
-import 'package:test/test.dart';
 
 class MockOAuthApi extends Mock implements OAuthApiInterface {}
 

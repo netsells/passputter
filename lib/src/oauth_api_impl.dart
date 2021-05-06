@@ -1,4 +1,7 @@
+// 📦 Package imports:
 import 'package:dio/dio.dart';
+
+// 🌎 Project imports:
 import 'package:passputter/src/oauth_api_interface.dart';
 import 'package:passputter/src/oauth_token.dart';
 
