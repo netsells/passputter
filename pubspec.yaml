@@ -1,6 +1,6 @@
 name: passputter
 description: Easily authenticate using OAuth 2.0 client/password grants.
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/netsells/passputter
 
 environment:
