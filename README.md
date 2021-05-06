@@ -3,7 +3,8 @@
 Easily authenticate using OAuth 2.0 client/password grants.
 
 [![style: very good analysis](https://img.shields.io/badge/style-very_good_analysis-B22C89.svg)](https://pub.dev/packages/very_good_analysis)
-![Pub Version](https://img.shields.io/pub/v/passputter)
+[![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg)](https://gitmoji.dev/)
+[![Pub Version](https://img.shields.io/pub/v/passputter)](https://pub.dev/packages/passputter)
 ![GitHub](https://img.shields.io/github/license/netsells/passputter)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/netsells/passputter/Test)
 
