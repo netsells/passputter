@@ -18,13 +18,13 @@ class OAuthToken {
     Map<String, dynamic> map, [
     Clock clock = const Clock(),
   ]) {
-    final expiresIn = map['expiresIn'];
+    final expiresIn = map['expires_in'];
     return OAuthToken(
-      token: map['accessToken'],
+      token: map['access_token'],
       expiresAt: expiresIn != null
           ? clock.now().add(Duration(seconds: expiresIn))
           : null,
-      refreshToken: map['refreshToken'],
+      refreshToken: map['refresh_token'],
     );
   }
 
@@ -41,7 +41,7 @@ class OAuthToken {
   final DateTime? expiresAt;
 
   /// A refresh token which can be used to generate a new token.
-  final String refreshToken;
+  final String? refreshToken;
 
   @override
   bool operator ==(Object other) {

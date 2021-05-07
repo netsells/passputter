@@ -1,7 +1,9 @@
 // 📦 Package imports:
+import 'package:clock/clock.dart';
 import 'package:dio/dio.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:test/test.dart';
+import 'package:time/time.dart';
 
 // 🌎 Project imports:
 import 'package:passputter/passputter.dart';
@@ -17,17 +19,20 @@ void main() {
   late InMemoryTokenStorage tokenStorage;
   late MockOAuthApi oAuthApi;
   late MockHandler handler;
+  late Clock clock;
   late ClientTokenInterceptor interceptor;
 
   setUp(() {
     tokenStorage = InMemoryTokenStorage();
     oAuthApi = MockOAuthApi();
     handler = MockHandler();
+    clock = Clock.fixed(DateTime(2021, 5, 1));
     interceptor = ClientTokenInterceptor(
       tokenStorage: tokenStorage,
       oAuthApi: oAuthApi,
       clientId: 'id',
       clientSecret: 'secret',
+      clock: clock,
     );
   });
 
@@ -53,6 +58,27 @@ void main() {
 
   test('generates header when none exists in TokenStorage', () async {
     await tokenStorage.deleteClientToken();
+
+    when(() => oAuthApi.getClientToken(clientId: 'id', clientSecret: 'secret'))
+        .thenAnswer((_) async => token);
+
+    await interceptor.onRequest(tRequest, handler);
+
+    final expected = tRequest..headers['Authorization'] = 'Bearer token';
+
+    verify(() => handler.next(expected));
+
+    verify(
+      () => oAuthApi.getClientToken(clientId: 'id', clientSecret: 'secret'),
+    );
+  });
+
+  test('generates header when token in TokenStorage has expired', () async {
+    await tokenStorage.saveClientToken(OAuthToken(
+      token: 'expired',
+      expiresAt: clock.now().subtract(1.hours),
+      refreshToken: null,
+    ));
 
     when(() => oAuthApi.getClientToken(clientId: 'id', clientSecret: 'secret'))
         .thenAnswer((_) async => token);

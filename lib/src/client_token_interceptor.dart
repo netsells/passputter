@@ -1,9 +1,11 @@
 // 📦 Package imports:
+import 'package:clock/clock.dart';
 import 'package:dio/dio.dart';
 
 // 🌎 Project imports:
 import 'package:passputter/passputter.dart';
 import 'package:passputter/src/oauth_api_interface.dart';
+import 'package:passputter/src/oauth_token.dart';
 
 /// Adds a client bearer token to the Authorization header of each request
 class ClientTokenInterceptor extends Interceptor {
@@ -13,6 +15,7 @@ class ClientTokenInterceptor extends Interceptor {
     required this.oAuthApi,
     required this.clientId,
     required this.clientSecret,
+    this.clock = const Clock(),
   });
 
   /// An instance of [TokenStorage]
@@ -27,6 +30,9 @@ class ClientTokenInterceptor extends Interceptor {
   /// The OAuth Client Secret
   final String clientSecret;
 
+  /// The [clock] to use for date comparisons
+  final Clock clock;
+
   @override
   Future<void> onRequest(
     RequestOptions options,
@@ -36,12 +42,7 @@ class ClientTokenInterceptor extends Interceptor {
     if (token == null) {
       try {
         // No token saved; get another one.
-        final newToken = await oAuthApi.getClientToken(
-          clientId: clientId,
-          clientSecret: clientSecret,
-        );
-
-        await tokenStorage.saveClientToken(newToken);
+        final newToken = await _getNewToken();
 
         options.headers['Authorization'] = 'Bearer ${newToken.token}';
 
@@ -50,8 +51,27 @@ class ClientTokenInterceptor extends Interceptor {
         return handler.reject(e);
       }
     } else {
-      options.headers['Authorization'] = 'Bearer ${token.token}';
-      return handler.next(options);
+      if (token.expiresAt != null && token.expiresAt!.isBefore(clock.now())) {
+        // Expired token; refresh.
+        final newToken = await _getNewToken();
+
+        options.headers['Authorization'] = 'Bearer ${newToken.token}';
+
+        return handler.next(options);
+      } else {
+        options.headers['Authorization'] = 'Bearer ${token.token}';
+        return handler.next(options);
+      }
     }
+  }
+
+  Future<OAuthToken> _getNewToken() async {
+    final newToken = await oAuthApi.getClientToken(
+      clientId: clientId,
+      clientSecret: clientSecret,
+    );
+
+    await tokenStorage.saveClientToken(newToken);
+    return newToken;
   }
 }
