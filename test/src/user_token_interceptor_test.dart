@@ -9,6 +9,7 @@ import 'package:time/time.dart';
 import 'package:passputter/passputter.dart';
 import 'package:passputter/src/oauth_api_interface.dart';
 import 'package:passputter/src/oauth_token.dart';
+import 'package:passputter/src/token_expired_exception.dart';
 
 class MockOAuthApi extends Mock implements OAuthApiInterface {}
 
@@ -20,6 +21,16 @@ void main() {
   late MockHandler handler;
   late Clock clock;
   late UserTokenInterceptor interceptor;
+
+  setUpAll(() {
+    registerFallbackValue<DioError>(
+      DioError(
+        requestOptions: RequestOptions(
+          path: 'path',
+        ),
+      ),
+    );
+  });
 
   setUp(() {
     tokenStorage = InMemoryTokenStorage();
@@ -90,6 +101,34 @@ void main() {
       ),
     );
   });
+
+  test(
+    'throws error if token has expired and there is no refresh token',
+    () async {
+      final token = OAuthToken(
+        token: 'token',
+        expiresAt: clock.now().subtract(30.days),
+        refreshToken: null,
+      );
+
+      await tokenStorage.saveUserToken(token);
+
+      await interceptor.onRequest(tRequest, handler);
+
+      final captured = verify(() => handler.reject(captureAny())).captured;
+
+      expect(
+        captured.last,
+        isA<DioError>().having(
+          (e) => e.error,
+          'error',
+          isA<TokenExpiredException>(),
+        ),
+      );
+
+      verifyZeroInteractions(oAuthApi);
+    },
+  );
 
   test('rejects request if token refresh fails', () async {
     final token = OAuthToken(

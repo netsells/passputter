@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 // 🌎 Project imports:
 import 'package:passputter/passputter.dart';
 import 'package:passputter/src/oauth_api_interface.dart';
+import 'package:passputter/src/token_expired_exception.dart';
 
 /// Adds a user bearer token to the Authorizaton header of each request
 class UserTokenInterceptor extends Interceptor {
@@ -40,20 +41,31 @@ class UserTokenInterceptor extends Interceptor {
     final token = tokenStorage.userToken;
     if (token != null) {
       if (token.expiresAt != null && token.expiresAt!.isBefore(clock.now())) {
-        try {
-          final newToken = await oAuthApi.getRefreshedToken(
-            refreshToken: token.refreshToken,
-            clientId: clientId,
-            clientSecret: clientSecret,
+        final refreshToken = token.refreshToken;
+        if (refreshToken != null) {
+          try {
+            final newToken = await oAuthApi.getRefreshedToken(
+              refreshToken: refreshToken,
+              clientId: clientId,
+              clientSecret: clientSecret,
+            );
+
+            await tokenStorage.saveUserToken(newToken);
+
+            options.headers['Authorization'] = 'Bearer ${newToken.token}';
+
+            return handler.next(options);
+          } on DioError catch (e) {
+            return handler.reject(e);
+          }
+        } else {
+          return handler.reject(
+            DioError(
+              requestOptions: options,
+              type: DioErrorType.other,
+              error: TokenExpiredException(token),
+            ),
           );
-
-          await tokenStorage.saveUserToken(newToken);
-
-          options.headers['Authorization'] = 'Bearer ${newToken.token}';
-
-          return handler.next(options);
-        } on DioError catch (e) {
-          return handler.reject(e);
         }
       } else {
         options.headers['Authorization'] = 'Bearer ${token.token}';

@@ -42,8 +42,8 @@ void main() {
           requestOptions: RequestOptions(path: endpoint),
           statusCode: 200,
           data: '''{
-            "accessToken": "token",
-            "refreshToken": "refresh"
+            "access_token": "token",
+            "refresh_token": "refresh"
           }''',
         ),
       );
@@ -105,8 +105,8 @@ void main() {
           requestOptions: RequestOptions(path: endpoint),
           statusCode: 200,
           data: '''{
-            "accessToken": "token",
-            "refreshToken": "refresh"
+            "access_token": "token",
+            "refresh_token": "refresh"
           }''',
         ),
       );
@@ -173,8 +173,8 @@ void main() {
           requestOptions: RequestOptions(path: endpoint),
           statusCode: 200,
           data: '''{
-            "accessToken": "token",
-            "refreshToken": "refresh"
+            "access_token": "token",
+            "refresh_token": "refresh"
           }''',
         ),
       );
