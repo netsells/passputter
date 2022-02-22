@@ -1,3 +1,8 @@
+## 2.0.1
+
+- Fix build
+- Export `OAuthToken`
+
 ## 2.0.0
 
 - BREAKING: `TokenStorage` now provides the option to asynchronously retrieve tokens.
