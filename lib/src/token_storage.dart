@@ -1,13 +1,15 @@
 // 🌎 Project imports:
+import 'dart:async';
+
 import 'oauth_token.dart';
 
 /// Handles storage and retrieval of [OAuthToken]s.
 abstract class TokenStorage {
   /// Retrieves the currently saved client token if it exists, or none.
-  OAuthToken? get clientToken;
+  FutureOr<OAuthToken?> get clientToken;
 
   /// Retrieves the currently saved user token if it exists, or none.
-  OAuthToken? get userToken;
+  FutureOr<OAuthToken?> get userToken;
 
   /// Saves a new client [token].
   ///

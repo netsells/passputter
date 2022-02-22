@@ -3,8 +3,10 @@ import 'dart:convert';
 
 // 📦 Package imports:
 import 'package:clock/clock.dart';
+import 'package:meta/meta.dart';
 
 /// An authentication token.
+@immutable
 class OAuthToken {
   /// Constructs an [OAuthToken]
   const OAuthToken({
@@ -18,19 +20,19 @@ class OAuthToken {
     Map<String, dynamic> map, [
     Clock clock = const Clock(),
   ]) {
-    final expiresIn = map['expires_in'];
+    final expiresIn = map['expires_in'] as int?;
     return OAuthToken(
-      token: map['access_token'],
+      token: map['access_token'] as String,
       expiresAt: expiresIn != null
           ? clock.now().add(Duration(seconds: expiresIn))
           : null,
-      refreshToken: map['refresh_token'],
+      refreshToken: map['refresh_token'] as String?,
     );
   }
 
   /// Constructs an [OAuthToken] from a JSON [source]
   factory OAuthToken.fromJson(String source) =>
-      OAuthToken.fromMap(json.decode(source));
+      OAuthToken.fromMap(json.decode(source) as Map<String, dynamic>);
 
   /// The token used to authenticate requests.
   ///

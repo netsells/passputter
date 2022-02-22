@@ -1,7 +1,6 @@
 // 📦 Package imports:
 import 'package:clock/clock.dart';
 import 'package:dio/dio.dart';
-
 // 🌎 Project imports:
 import 'package:passputter/passputter.dart';
 import 'package:passputter/src/oauth_api_interface.dart';
@@ -38,7 +37,7 @@ class ClientTokenInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final token = tokenStorage.clientToken;
+    final token = await tokenStorage.clientToken;
     if (token == null) {
       try {
         // No token saved; get another one.

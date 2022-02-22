@@ -1,6 +1,5 @@
 // 📦 Package imports:
 import 'package:dio/dio.dart';
-
 // 🌎 Project imports:
 import 'package:passputter/src/oauth_api_interface.dart';
 import 'package:passputter/src/oauth_token.dart';
@@ -23,7 +22,7 @@ class OAuthApiImpl implements OAuthApiInterface {
     required String clientId,
     required String clientSecret,
   }) async {
-    final r = await client.post(
+    final r = await client.post<String>(
       endpoint,
       data: <String, String>{
         'client_id': clientId,
@@ -33,7 +32,7 @@ class OAuthApiImpl implements OAuthApiInterface {
       options: Options(contentType: Headers.formUrlEncodedContentType),
     );
 
-    return OAuthToken.fromJson(r.data);
+    return OAuthToken.fromJson(r.data!);
   }
 
   @override
@@ -42,7 +41,7 @@ class OAuthApiImpl implements OAuthApiInterface {
     required String clientId,
     required String clientSecret,
   }) async {
-    final r = await client.post(
+    final r = await client.post<String>(
       endpoint,
       data: <String, String>{
         'refresh_token': refreshToken,
@@ -53,7 +52,7 @@ class OAuthApiImpl implements OAuthApiInterface {
       options: Options(contentType: Headers.formUrlEncodedContentType),
     );
 
-    return OAuthToken.fromJson(r.data);
+    return OAuthToken.fromJson(r.data!);
   }
 
   @override
@@ -63,7 +62,7 @@ class OAuthApiImpl implements OAuthApiInterface {
     required String clientId,
     required String clientSecret,
   }) async {
-    final r = await client.post(
+    final r = await client.post<String>(
       endpoint,
       data: <String, String>{
         'username': username,
@@ -75,6 +74,6 @@ class OAuthApiImpl implements OAuthApiInterface {
       options: Options(contentType: Headers.formUrlEncodedContentType),
     );
 
-    return OAuthToken.fromJson(r.data);
+    return OAuthToken.fromJson(r.data!);
   }
 }

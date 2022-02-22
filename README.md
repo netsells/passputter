@@ -14,7 +14,7 @@ Easily authenticate using OAuth 2.0 client/password grants.
 Install passputter from [pub.dev](https://pub.dev/packages/passputter):
 
 ```yaml
-passputter: ^1.0.2
+passputter: ^2.0.0
 ```
 
 ## ✅ Prerequisites
@@ -47,7 +47,7 @@ class HiveTokenStorage implements TokenStorage {
     static const _userTokenKey = 'userToken';
 
     @override
-    OAuthToken? get clientToken {
+    FutureOr<OAuthToken?> get clientToken async {
         final tokenMap = _box.get(_clientTokenKey);
         if (tokenMap != null) {
             return OAuthToken.fromJson(tokenMap);
@@ -57,7 +57,7 @@ class HiveTokenStorage implements TokenStorage {
     }
 
     @override
-    OAuthToken? get userToken {
+    FutureOr<OAuthToken?> get userToken async {
         final tokenMap = _box.get(_userTokenKey);
         if (tokenMap != null) {
             return OAuthToken.fromJson(tokenMap);

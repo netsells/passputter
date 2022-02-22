@@ -1,11 +1,10 @@
 // 📦 Package imports:
 import 'package:dio/dio.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:test/test.dart';
-
 // 🌎 Project imports:
 import 'package:passputter/src/oauth_api_impl.dart';
 import 'package:passputter/src/oauth_token.dart';
+import 'package:test/test.dart';
 
 class MockDio extends Mock implements Dio {}
 
@@ -28,7 +27,7 @@ void main() {
   group('getClientToken', () {
     test('successfully returns token', () async {
       when(
-        () => dio.post(
+        () => dio.post<String>(
           endpoint,
           data: <String, String>{
             'client_id': clientId,
@@ -41,10 +40,12 @@ void main() {
         (_) async => Response(
           requestOptions: RequestOptions(path: endpoint),
           statusCode: 200,
-          data: '''{
+          data: '''
+          {
             "access_token": "token",
             "refresh_token": "refresh"
-          }''',
+          }
+          ''',
         ),
       );
 
@@ -64,7 +65,7 @@ void main() {
 
     test('throws DioError if one is thrown by request', () async {
       when(
-        () => dio.post(
+        () => dio.post<String>(
           endpoint,
           data: <String, String>{
             'client_id': clientId,
@@ -76,7 +77,7 @@ void main() {
       ).thenAnswer((_) => Future.error(tError));
 
       expect(
-        () async => await oAuthApi.getClientToken(
+        () async => oAuthApi.getClientToken(
           clientId: clientId,
           clientSecret: clientSecret,
         ),
@@ -90,7 +91,7 @@ void main() {
 
     test('successfully returns token', () async {
       when(
-        () => dio.post(
+        () => dio.post<String>(
           endpoint,
           data: <String, String>{
             'refresh_token': refreshToken,
@@ -104,10 +105,12 @@ void main() {
         (_) async => Response(
           requestOptions: RequestOptions(path: endpoint),
           statusCode: 200,
-          data: '''{
+          data: '''
+          {
             "access_token": "token",
             "refresh_token": "refresh"
-          }''',
+          }
+          ''',
         ),
       );
 
@@ -128,7 +131,7 @@ void main() {
 
     test('throws DioError if one is thrown by request', () async {
       when(
-        () => dio.post(
+        () => dio.post<String>(
           endpoint,
           data: <String, String>{
             'refresh_token': refreshToken,
@@ -141,7 +144,7 @@ void main() {
       ).thenAnswer((_) => Future.error(tError));
 
       expect(
-        () async => await oAuthApi.getRefreshedToken(
+        () async => oAuthApi.getRefreshedToken(
           refreshToken: refreshToken,
           clientId: clientId,
           clientSecret: clientSecret,
@@ -157,7 +160,7 @@ void main() {
 
     test('successfully returns token', () async {
       when(
-        () => dio.post(
+        () => dio.post<String>(
           endpoint,
           data: <String, String>{
             'username': username,
@@ -172,10 +175,12 @@ void main() {
         (_) async => Response(
           requestOptions: RequestOptions(path: endpoint),
           statusCode: 200,
-          data: '''{
+          data: '''
+          {
             "access_token": "token",
             "refresh_token": "refresh"
-          }''',
+          }
+          ''',
         ),
       );
 
@@ -197,7 +202,7 @@ void main() {
 
     test('throws DioError if one is thrown by request', () async {
       when(
-        () => dio.post(
+        () => dio.post<String>(
           endpoint,
           data: <String, String>{
             'username': username,
@@ -211,7 +216,7 @@ void main() {
       ).thenAnswer((_) => Future.error(tError));
 
       expect(
-        () async => await oAuthApi.getUserToken(
+        () async => oAuthApi.getUserToken(
           username: username,
           password: password,
           clientId: clientId,

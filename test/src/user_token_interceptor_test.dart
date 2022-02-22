@@ -2,14 +2,13 @@
 import 'package:clock/clock.dart';
 import 'package:dio/dio.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:test/test.dart';
-import 'package:time/time.dart';
-
 // 🌎 Project imports:
 import 'package:passputter/passputter.dart';
 import 'package:passputter/src/oauth_api_interface.dart';
 import 'package:passputter/src/oauth_token.dart';
 import 'package:passputter/src/token_expired_exception.dart';
+import 'package:test/test.dart';
+import 'package:time/time.dart';
 
 class MockOAuthApi extends Mock implements OAuthApiInterface {}
 
@@ -23,7 +22,7 @@ void main() {
   late UserTokenInterceptor interceptor;
 
   setUpAll(() {
-    registerFallbackValue<DioError>(
+    registerFallbackValue(
       DioError(
         requestOptions: RequestOptions(
           path: 'path',
@@ -36,7 +35,7 @@ void main() {
     tokenStorage = InMemoryTokenStorage();
     oAuthApi = MockOAuthApi();
     handler = MockHandler();
-    clock = Clock.fixed(DateTime(2021, 1, 1));
+    clock = Clock.fixed(DateTime(2021));
     interceptor = UserTokenInterceptor(
       tokenStorage: tokenStorage,
       oAuthApi: oAuthApi,

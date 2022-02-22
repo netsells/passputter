@@ -1,7 +1,6 @@
 // 📦 Package imports:
 import 'package:clock/clock.dart';
 import 'package:dio/dio.dart';
-
 // 🌎 Project imports:
 import 'package:passputter/passputter.dart';
 import 'package:passputter/src/oauth_api_interface.dart';
@@ -38,7 +37,7 @@ class UserTokenInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final token = tokenStorage.userToken;
+    final token = await tokenStorage.userToken;
     if (token != null) {
       if (token.expiresAt != null && token.expiresAt!.isBefore(clock.now())) {
         final refreshToken = token.refreshToken;
@@ -62,7 +61,6 @@ class UserTokenInterceptor extends Interceptor {
           return handler.reject(
             DioError(
               requestOptions: options,
-              type: DioErrorType.other,
               error: TokenExpiredException(token),
             ),
           );
