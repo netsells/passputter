@@ -1,3 +1,7 @@
+## 2.1.0
+
+- Add pre-constructed `ClientTokenInterceptor` and `UserTokenInterceptor` to `Passputter`
+
 ## 2.0.1
 
 - Fix build

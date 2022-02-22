@@ -46,4 +46,20 @@ class PassputterImpl implements Passputter {
   Future<void> logOut() async {
     await tokenStorage.deleteUserToken();
   }
+
+  @override
+  ClientTokenInterceptor get clientTokenInterceptor => ClientTokenInterceptor(
+        tokenStorage: tokenStorage,
+        oAuthApi: oAuthApi,
+        clientId: clientId,
+        clientSecret: clientSecret,
+      );
+
+  @override
+  UserTokenInterceptor get userTokenInterceptor => UserTokenInterceptor(
+        tokenStorage: tokenStorage,
+        oAuthApi: oAuthApi,
+        clientId: clientId,
+        clientSecret: clientSecret,
+      );
 }

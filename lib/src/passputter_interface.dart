@@ -1,6 +1,5 @@
 // 📦 Package imports:
 import 'package:dio/dio.dart';
-
 // 🌎 Project imports:
 import 'package:passputter/passputter.dart';
 import 'package:passputter/src/oauth_api_impl.dart';
@@ -51,4 +50,10 @@ abstract class Passputter {
 
   /// Log out of the application
   Future<void> logOut();
+
+  /// A [Dio] interceptor which adds a client token to each request
+  ClientTokenInterceptor get clientTokenInterceptor;
+
+  /// A [Dio] interceptor which adds a user token to each request
+  UserTokenInterceptor get userTokenInterceptor;
 }
