@@ -25,7 +25,7 @@ class PassputterImpl implements Passputter {
   final String clientSecret;
 
   @override
-  bool get isLoggedIn => tokenStorage.userToken != null;
+  Future<bool> get isLoggedIn async => (await tokenStorage.userToken) != null;
 
   @override
   Future<void> logIn({

@@ -1,11 +1,9 @@
 // 📦 Package imports:
 import 'package:clock/clock.dart';
 import 'package:dio/dio.dart';
-
 // 🌎 Project imports:
 import 'package:passputter/passputter.dart';
 import 'package:passputter/src/oauth_api_interface.dart';
-import 'package:passputter/src/oauth_token.dart';
 
 /// Adds a client bearer token to the Authorization header of each request
 class ClientTokenInterceptor extends Interceptor {

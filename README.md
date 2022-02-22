@@ -14,7 +14,7 @@ Easily authenticate using OAuth 2.0 client/password grants.
 Install passputter from [pub.dev](https://pub.dev/packages/passputter):
 
 ```yaml
-passputter: ^2.1.0
+passputter: ^3.0.0
 ```
 
 ## ✅ Prerequisites

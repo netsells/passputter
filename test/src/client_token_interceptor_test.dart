@@ -2,14 +2,11 @@
 import 'package:clock/clock.dart';
 import 'package:dio/dio.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:test/test.dart';
-import 'package:time/time.dart';
-
 // 🌎 Project imports:
 import 'package:passputter/passputter.dart';
-import 'package:passputter/src/client_token_interceptor.dart';
 import 'package:passputter/src/oauth_api_interface.dart';
-import 'package:passputter/src/oauth_token.dart';
+import 'package:test/test.dart';
+import 'package:time/time.dart';
 
 class MockOAuthApi extends Mock implements OAuthApiInterface {}
 
@@ -26,7 +23,7 @@ void main() {
     tokenStorage = InMemoryTokenStorage();
     oAuthApi = MockOAuthApi();
     handler = MockHandler();
-    clock = Clock.fixed(DateTime(2021, 5, 1));
+    clock = Clock.fixed(DateTime(2021, 5));
     interceptor = ClientTokenInterceptor(
       tokenStorage: tokenStorage,
       oAuthApi: oAuthApi,
@@ -74,11 +71,13 @@ void main() {
   });
 
   test('generates header when token in TokenStorage has expired', () async {
-    await tokenStorage.saveClientToken(OAuthToken(
-      token: 'expired',
-      expiresAt: clock.now().subtract(1.hours),
-      refreshToken: null,
-    ));
+    await tokenStorage.saveClientToken(
+      OAuthToken(
+        token: 'expired',
+        expiresAt: clock.now().subtract(1.hours),
+        refreshToken: null,
+      ),
+    );
 
     when(() => oAuthApi.getClientToken(clientId: 'id', clientSecret: 'secret'))
         .thenAnswer((_) async => token);

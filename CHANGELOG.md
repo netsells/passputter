@@ -1,3 +1,7 @@
+## 3.0.0
+
+- BREAKING: `isLoggedIn` now returns `Future<bool>` instead of bool
+
 ## 2.1.0
 
 - Add pre-constructed `ClientTokenInterceptor` and `UserTokenInterceptor` to `Passputter`

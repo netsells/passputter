@@ -2,7 +2,7 @@
 import 'dart:async';
 
 // 🌎 Project imports:
-import 'oauth_token.dart';
+import 'package:passputter/src/oauth_token.dart';
 
 /// Handles storage and retrieval of [OAuthToken]s.
 abstract class TokenStorage {

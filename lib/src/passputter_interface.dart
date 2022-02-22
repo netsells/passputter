@@ -38,7 +38,7 @@ abstract class Passputter {
   }
 
   /// Whether the user is logged in.
-  bool get isLoggedIn;
+  Future<bool> get isLoggedIn;
 
   /// Log in with the given [email] and [password] credentials.
   ///

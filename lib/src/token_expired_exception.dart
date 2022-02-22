@@ -1,7 +1,9 @@
 // 🌎 Project imports:
+import 'package:meta/meta.dart';
 import 'package:passputter/src/oauth_token.dart';
 
 /// Thrown when an expired [OAuthToken] is used and cannot be refreshed.
+@immutable
 class TokenExpiredException implements Exception {
   /// Constructs a [TokenExpiredException]
   const TokenExpiredException(
