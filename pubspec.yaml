@@ -9,6 +9,7 @@ environment:
 dependencies:
   clock: ^1.1.0
   dio: ^4.0.0
+  meta: ^1.7.0
 
 dev_dependencies:
   import_sorter: ^4.5.0
