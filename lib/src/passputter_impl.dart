@@ -48,12 +48,17 @@ class PassputterImpl implements Passputter {
   }
 
   @override
-  ClientTokenInterceptor get clientTokenInterceptor => ClientTokenInterceptor(
-        tokenStorage: tokenStorage,
-        oAuthApi: oAuthApi,
-        clientId: clientId,
-        clientSecret: clientSecret,
-      );
+  ClientTokenInterceptor getClientTokenInterceptor({
+    required String clientId,
+    required String clientSecret,
+  }) {
+    return ClientTokenInterceptor(
+      tokenStorage: tokenStorage,
+      oAuthApi: oAuthApi,
+      clientId: clientId,
+      clientSecret: clientSecret,
+    );
+  }
 
   @override
   UserTokenInterceptor get userTokenInterceptor => UserTokenInterceptor(

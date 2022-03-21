@@ -52,7 +52,10 @@ abstract class Passputter {
   Future<void> logOut();
 
   /// A [Dio] interceptor which adds a client token to each request
-  ClientTokenInterceptor get clientTokenInterceptor;
+  ClientTokenInterceptor getClientTokenInterceptor({
+    required String clientId,
+    required String clientSecret,
+  });
 
   /// A [Dio] interceptor which adds a user token to each request
   UserTokenInterceptor get userTokenInterceptor;
