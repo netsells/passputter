@@ -1,10 +1,11 @@
 // 📦 Package imports:
 import 'package:dio/dio.dart';
 import 'package:mock_web_server/mock_web_server.dart';
-// 🌎 Project imports:
-import 'package:passputter/passputter.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:test/test.dart';
+
+// 🌎 Project imports:
+import 'package:passputter/passputter.dart';
 
 void main() {
   const clientId = 'id';

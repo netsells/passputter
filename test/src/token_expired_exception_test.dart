@@ -1,8 +1,11 @@
 // 📦 Package imports:
+
+// 📦 Package imports:
+import 'package:test/test.dart';
+
 // 🌎 Project imports:
 import 'package:passputter/src/oauth_token.dart';
 import 'package:passputter/src/token_expired_exception.dart';
-import 'package:test/test.dart';
 
 void main() {
   test('equal exceptions are evaluated as equal', () async {

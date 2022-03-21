@@ -1,5 +1,7 @@
-// 🌎 Project imports:
+// 📦 Package imports:
 import 'package:meta/meta.dart';
+
+// 🌎 Project imports:
 import 'package:passputter/src/oauth_token.dart';
 
 /// Thrown when an expired [OAuthToken] is used and cannot be refreshed.
