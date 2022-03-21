@@ -14,7 +14,7 @@ Easily authenticate using OAuth 2.0 client/password grants.
 Install passputter from [pub.dev](https://pub.dev/packages/passputter):
 
 ```yaml
-passputter: ^3.0.0
+passputter: ^4.0.0
 ```
 
 ## ✅ Prerequisites
@@ -131,7 +131,7 @@ Passputter provides two interceptors which you can add to your Dio instances: `U
 You can retrieve them from your `Passputter` instance:
 
 ```dart
-dio.interceptors.add(passputter.clientTokenInterceptor);
+dio.interceptors.add(passputter.getClientTokenInterceptor(clientId: '1', clientSecret: 'secret'));
 // or
 dio.interceptors.add(passputter.userTokenInterceptor);
 ```

@@ -1,3 +1,7 @@
+## 4.0.0
+
+- BREAKING: Remove `clientTokenInterceptor` getter and replace with `getClientTokenInterceptor` method
+
 ## 3.0.0
 
 - BREAKING: `isLoggedIn` now returns `Future<bool>` instead of bool
